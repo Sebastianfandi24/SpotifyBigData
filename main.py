@@ -1,5 +1,4 @@
-
-
+from app.Load.SMEloader import Loader
 from app.Extract.SMExtract import SpotifyExtractor
 from app.Transform.SMETransform import DataClean
 
@@ -20,6 +19,10 @@ def main():
 	# Mostrar los primeros 5 registros limpios
 	print("\n=== 5 REGISTROS LIMPIOS ===")
 	print(cleaned_data.head(5))
+
+	# Cargar los datos limpios
+	loader = Loader(cleaned_data)
+	loader.to_sqlite()
 
 if __name__ == "__main__":
 	main()
