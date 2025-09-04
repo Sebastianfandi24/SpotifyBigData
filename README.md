@@ -27,32 +27,27 @@
 ### 🏃‍♂️ Ejecutar en 60 Segundos
 
 ```bash
-# 1. Clonar e instalar
+# Clonar e instalar
 git clone https://github.com/Sebastianfandi24/SpotifyBigData.git
 cd SpotifyBigData
 pip install -r requirements.txt
 
-# 2. Ejecutar pipeline completo
+# Ejecutar pipeline completo
 python3 main.py
-
-# 3. ¡Listo! Datos limpios disponibles en SQLite y CSV
 ```
 
-### 📊 Resultados Inmediatos
+**✅ Resultado:** Datos limpios disponibles en SQLite y CSV con calidad del 94.5%
+
+### 📊 Verificación Rápida
 
 ```python
-# Ejemplo de uso básico
+# Verificar instalación
 from app.Extract.SMExtract import SpotifyExtractor
 from app.Transform.SMETransform import DataClean
 
-# Pipeline en 3 líneas
 extractor = SpotifyExtractor('app/Extract/Files/spotify-2023.csv')
-cleaner = DataClean(extractor.extract_data())
-clean_data = cleaner.comprehensive_clean()
-
-# ✅ Datos listos para análisis
-print(f"Filas procesadas: {len(clean_data)}")
-print(f"Calidad de datos: {cleaner.quality_assessment()['overall_quality_score']:.1f}%")
+data = extractor.extract_data()
+print(f"✅ Dataset cargado: {len(data)} filas, {len(data.columns)} columnas")
 ```
 
 ---
@@ -438,6 +433,10 @@ clean_data = cleaner.get_cleaned_data()
 ### 🎵 Descripción del Dataset
 
 El dataset **"Most Streamed Spotify Songs 2023"** contiene información detallada sobre las canciones más populares en Spotify durante 2023.
+
+**🔗 Fuente del Dataset:** [Kaggle - Top Spotify Songs 2023](https://www.kaggle.com/datasets/nelgiriyewithana/top-spotify-songs-2023)
+
+**📚 Contexto Académico:** Este proyecto forma parte del curso de Big Data en la Universidad de San Buenaventura, aplicando técnicas de ETL para el procesamiento de grandes volúmenes de datos musicales.
 
 ### 📋 Estructura de Datos (24 Columnas)
 
@@ -1637,37 +1636,6 @@ for col in numeric_columns:
 non_numeric_columns = df.select_dtypes(exclude=[np.number]).columns
 for col in non_numeric_columns:
    most_frequent = df[col].mode()
-   if len(most_frequent) > 0:
-      df[col] = df[col].fillna(most_frequent[0])
-```
-
-## Configuración y dependencias
-
-Instala las dependencias usando:
-```sh
-pip install -r requirements.txt
-```
-
-Principales librerías usadas:
-- pandas
-- numpy
-
-## Ejecución del pipeline
-
-Ejecuta el pipeline desde la raíz del proyecto:
-```sh
-python3 main.py
-```
-
-## Pruebas
-
-- Verifica que el archivo `app/Extract/Files/spotify-2023.csv` exista y tenga datos.
-- Al ejecutar `main.py`, se debe mostrar:
-  - Análisis de valores nulos
-  - Resumen de limpieza
-  - 5 registros limpios
-- Si hay errores de importación, revisa que las rutas sean correctas y que las dependencias estén instaladas.
-
 ## Recomendaciones
 
 - Mantén actualizado el archivo `requirements.txt` usando `pip freeze > requirements.txt`.
