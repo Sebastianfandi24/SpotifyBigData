@@ -1,9 +1,18 @@
 from app.Load.SMEloader import Loader
 from app.Extract.SMExtract import SpotifyExtractor
 from app.Transform.SMETransform import DataClean
+import pandas as pd
 
 def main():
 	csv_path = 'app/Extract/Files/spotify-2023.csv'
+	
+	# Mostrar la cantidad de datos nulos en el CSV original
+	original_data = pd.read_csv(csv_path)
+	print()
+	print("Datos nulos en el CSV original:")
+	print(original_data.isnull().sum())
+	print()
+	
 	extractor = SpotifyExtractor(csv_path)
 	# Extraer datos originales
 	df = extractor.queries()
@@ -16,9 +25,11 @@ def main():
 	summary = data_cleaner.get_cleaning_summary()
 	print("\n=== RESUMEN DE LIMPIEZA ===")
 	print(summary)
+	print()
 	# Mostrar los primeros 5 registros limpios
 	print("\n=== 5 REGISTROS LIMPIOS ===")
 	print(cleaned_data.head(5))
+	print()
 
 	# Cargar los datos limpios
 	loader = Loader(cleaned_data)
